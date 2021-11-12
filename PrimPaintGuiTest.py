@@ -13,6 +13,7 @@ class Paint(object):
     def __init__(self):
         self.root = Tk()
         
+    
         self.root.title("PrimPaint")
         self.root.state('zoomed')
 
@@ -64,8 +65,23 @@ class Paint(object):
         self.c = Canvas(self.root, bg='white', width=600, height=600)
         self.c.grid(row=2, column=0, sticky=N+S+E+W)
 
+
+        self.c.bind("<MouseWheel>", self.do_zoom)
+        self.c.bind('<ButtonPress-1>', lambda event: self.c.scan_mark(event.x, event.y))
+        self.c.bind("<B1-Motion>", lambda event: self.c.scan_dragto(event.x, event.y, gain=1))
+
+    
+        
         self.setup()
         self.root.mainloop()
+
+        
+    def do_zoom(self,event):
+        x = self.c.canvasx(event.x)
+        y = self.c.canvasy(event.y)
+        factor = 1.001 ** event.delta
+        self.c.scale(ALL, x, y, factor, factor)
+    
 
     def setup(self):
         self.old_x = None
@@ -108,6 +124,11 @@ class Paint(object):
 
     def reset(self, event):
         self.old_x, self.old_y = None, None
+
+    
+
+    
+    
 
 
 if __name__ == '__main__':
