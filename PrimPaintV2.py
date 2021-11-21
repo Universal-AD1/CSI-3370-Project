@@ -78,6 +78,9 @@ class Paint(object):
         #self.eraser_button.grid(row=0, column=3)
         self.eraser_button.place(x=120,y=30)
         
+        self.airbrush_button =Button(self.root, text='airbrush',image=brush_new_image,command=self.use_airbrush)
+        self.airbrush_button.place(x=160,y=30)
+        
         self.choose_size_button = Scale(self.root, from_=1, to=10, orient=HORIZONTAL)
         #self.choose_size_button.grid(row=0, column=4)
         self.choose_size_button.place(x=175,y=25)
@@ -144,6 +147,9 @@ class Paint(object):
 
     def use_brush(self):
         self.activate_button(self.brush_button)
+        
+    def use_airbrush(self):
+        self.activate_button(self.airbrush_button)
 
     def choose_color(self):
         self.eraser_on = False
@@ -159,14 +165,31 @@ class Paint(object):
         self.eraser_on = eraser_mode
 
     def paint(self, event):
-        self.line_width = self.choose_size_button.get()
+         self.line_width = self.choose_size_button.get()
         paint_color = 'white' if self.eraser_on else self.color
-        if self.old_x and self.old_y:
+        
+        if self.active_button == self.brush_button:
+         if self.old_x and self.old_y:
+            self.c.create_line(self.old_x, self.old_y, event.x, event.y,
+                               width=self.line_width+5, fill=paint_color,
+                               capstyle=ROUND, smooth=TRUE, splinesteps=36)
+         self.old_x = event.x
+         self.old_y = event.y
+        if self.active_button == self.airbrush_button:
+         if self.old_x and self.old_y:
             self.c.create_line(self.old_x, self.old_y, event.x, event.y,
                                width=self.line_width, fill=paint_color,
                                capstyle=ROUND, smooth=TRUE, splinesteps=36)
-        self.old_x = event.x
-        self.old_y = event.y
+         self.old_x = event.x
+         self.old_y = event.y
+        else:
+         if self.old_x and self.old_y:
+            self.c.create_line(self.old_x, self.old_y, event.x, event.y,
+                               width=self.line_width, fill=paint_color,
+                               capstyle=ROUND, smooth=TRUE, splinesteps=36)
+         self.old_x = event.x
+         self.old_y = event.y
+
 
     def reset(self, event):
         self.old_x, self.old_y = None, None
