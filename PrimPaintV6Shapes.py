@@ -31,6 +31,10 @@ class Paint(object):
         brush_image= (Image.open(urlopen('https://github.com/Universal-AD1/CSI-3370-Project/blob/main/images/brush.png?raw=true')))
         brush_image_resized=brush_image.resize((30,30), Image.ANTIALIAS)
         brush_new_image= ImageTk.PhotoImage(brush_image_resized)
+        
+        calligraphy_image =(Image.open(urlopen('https://github.com/Universal-AD1/CSI-3370-Project/blob/main/images/calligraphypen.png?raw=true')))
+        calligraphy_image_resized = calligraphy_image.resize((30,30), Image.ANTIALIAS)
+        calligraphy_new_image= ImageTk.PhotoImage(calligraphy_image_resized)
 
 
         color_image= (Image.open(urlopen('https://github.com/Universal-AD1/CSI-3370-Project/blob/main/images/color.png?raw=true')))
@@ -89,8 +93,8 @@ class Paint(object):
         #self.eraser_button.grid(row=0, column=3)
         self.eraser_button.place(x=120,y=30)
 
-        self.airbrush_button =Button(self.root, text='airbrush',image=brush_new_image,command=self.use_airbrush)
-        self.airbrush_button.place(x=160,y=30)
+        self.calligraphy_button =Button(self.root, text='calligraphy',image=calligraphy_new_image,command=self.use_calligraphy)
+        self.calligraphy_button.place(x=160,y=30)
 
 
         self.choose_size_button = Scale(self.root, from_=1, to=10, orient=HORIZONTAL)
@@ -284,10 +288,10 @@ class Paint(object):
         self.startShape()
         self.activate_button(self.brush_button)
     
-    def use_airbrush(self):
+    def use_calligraphy(self):
         self.startShapePress = False
         self.startShape()
-        self.activate_button(self.airbrush_button)
+        self.activate_button(self.calligraphy_button)
     
     def choose_color(self):
         self.startShapePress = False
@@ -316,7 +320,7 @@ class Paint(object):
                                capstyle=ROUND, smooth=TRUE, splinesteps=36)
          self.old_x = event.x
          self.old_y = event.y
-        if self.active_button == self.airbrush_button:
+        if self.active_button == self.calligraphy_button:
          if self.old_x and self.old_y:
             self.c.create_line(self.old_x, self.old_y, event.x+5, event.y+5,
                                width=self.line_width, fill=paint_color,
