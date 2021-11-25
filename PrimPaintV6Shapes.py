@@ -318,7 +318,7 @@ class Paint(object):
          self.old_y = event.y
         if self.active_button == self.airbrush_button:
          if self.old_x and self.old_y:
-            self.c.create_line(self.old_x, self.old_y, event.x, event.y,
+            self.c.create_line(self.old_x, self.old_y, event.x+5, event.y+5,
                                width=self.line_width, fill=paint_color,
                                capstyle=ROUND, smooth=TRUE, splinesteps=36)
          self.old_x = event.x
