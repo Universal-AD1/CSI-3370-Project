@@ -290,11 +290,11 @@ class Paint(object):
         self.c.delete("all")
         #self.entry.destroy()
         self.entry.place_forget()
-
+    
     #Method used to change the background color
     def setBackColor(self):
         self.c.configure(bg = askcolor(color=self.color)[1])
-
+        
 
     #Sets the Width of canvas to user input value
     def setWidth(self):
@@ -320,7 +320,9 @@ class Paint(object):
 
     # save file method
     def save_file(self):
-        
+        rectBack = self.c.create_rectangle(0, 0, self.c.winfo_reqheight(), self.c.winfo_reqwidth(), fill = self.c["background"])
+        self.c.tag_lower(rectBack)
+
         EpsImagePlugin.gs_windows_binary =  r'C:\Program Files\gs\gs9.55.0\bin\gswin64c'
         #self.popup = FilenamePopup(self.root)
         self.save_button["state"] = "disabled"
@@ -365,6 +367,7 @@ class Paint(object):
         self.old_y = None
         self.line_width = self.choose_size_button.get()
         self.color = self.DEFAULT_COLOR
+        self.backColor = None
         self.eraser_on = False
         self.active_button = self.pen_button
         self.c.bind('<B1-Motion>', self.paint)
