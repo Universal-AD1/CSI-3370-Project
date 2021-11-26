@@ -171,6 +171,10 @@ class Paint(object):
         self.textbtn = Button(self.root, text='Insert Text Box', command=self.setText) 
         self.textbtn.place(x=400,y=30)
 
+        #Button to change background fill color
+        self.backRndBtn = Button(self.root, text='Change Background Color', command=self.setBackColor) 
+        self.backRndBtn.place(x=500,y=30)
+
         #Place Horizontal and Vertical Ruller
         hr = HRuler(self.root, setWidth, setHeight)#, offset=25)
         hr.place(x=28, y=65)
@@ -287,6 +291,11 @@ class Paint(object):
         #self.entry.destroy()
         self.entry.place_forget()
 
+    #Method used to change the background color
+    def setBackColor(self):
+        self.c.configure(bg = askcolor(color=self.color)[1])
+
+
     #Sets the Width of canvas to user input value
     def setWidth(self):
         widthUpdate = self.enter_width_text.get("1.0","end-1c")
@@ -402,7 +411,6 @@ class Paint(object):
     def paint(self, event):
         self.line_width = self.choose_size_button.get()
         paint_color = 'white' if self.eraser_on else self.color
-        
         if self.active_button == self.brush_button:
          if self.old_x and self.old_y:
             self.c.create_line(self.old_x, self.old_y, event.x, event.y,
